@@ -2,46 +2,37 @@ console.log("Gambling Simulation Problem");
 
 let stake = 100;
 let totalStake = 0;
-let totalAmount = 2000;
+let totalWin = 0;
+let totalLoss = 0;
 const BET = 1;
-const WIN_STAKE = 150;
-const LOSS_STAKE = 50;
-let flag = true;
 const DAYS = 20;
-let stakeArray = [];
+let stakeMap = new Map();
 
 console.log("Player has total: " + stake + " $ ");
 
 class Gambler {
     gamble = () => {
         for (let day = 1; day <= DAYS; day++) {
-            stake = 100;
-            flag = true;
-            while (flag) {
-                let bet = Math.floor(Math.random() * 2);
-                if (bet == BET) {
-                    stake++;
-                }
-                else {
-                    stake--;
-                }
-                this.resign(day);
+
+            let bet = Math.floor(Math.random() * 2);
+            if (bet == BET) {
+                stake++;
+                stake = stake + (stake / 2);
+                totalWin = totalWin + (stake / 2);
+                console.log("Player Wins..!!   " + "Day " + day + "     Stake = " + stake);
+            }
+            else {
+                stake--;
+                stake = stake / 2;
+                totalLoss = totalLoss + (stake / 2);
+                console.log("Player Loss..!!   " + "Day " + day + "     Stake = " + stake);
+            }
+            if (stake <= 0) {
+                console.log(" ----------------------------------------\nOn Day " + day + " Player Resign for the day");
+                break;
             }
         }
-        if (totalAmount > totalStake) {
-            console.log("Total Amount Loss " + (totalAmount - totalStake) + " $");
-        }
-        else {
-            console.log("Total Amount Loss " + (totalStake - totalAmount) + " $");
-        }
-    }
-    resign(day) {
-        if (stake >= WIN_STAKE || stake <= LOSS_STAKE) {
-            console.log(" ----------------------------------------\nOn Day " + day + " Player Resign for the day with " + stake);
-            stakeArray[day - 1] = stake;
-            totalStake += stake;
-            flag = false;
-        }
+        console.log("Total Amount Won " + totalWin + "\nTotal Amount Loss " + totalLoss);
     }
 }
 
