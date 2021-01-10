@@ -29,7 +29,7 @@ class Gambler {
                 console.log(" ----------------------------------------\nOn Day " + day + " Player Resign for the day");
                 break;
             }
-            stake += 100;
+            //stake += 100;
         }
         this.profitLoss();
     }
